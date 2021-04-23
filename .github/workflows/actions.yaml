@@ -8,7 +8,6 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_DEFAULT_REGION: us-east-1
       AWS_EC2_METADATA_DISABLED: true
-      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     services:
       minio:
         image: wktk/minio-server
@@ -20,7 +19,6 @@ jobs:
     steps:
       - name: Add 127.0.0.1 minio to /etc/hosts
         run: echo "127.0.0.1 minio" | sudo tee -a /etc/hosts
-      - uses: chrislennon/action-aws-cli@v1.1
       - name: make bucket
         run: aws --endpoint-url http://minio:9000/ s3 mb s3://sample-bucket
       - name: put object
