@@ -1,0 +1,16 @@
+name: minio-on-github-actions
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      minio:
+        image: wktk/minio-server
+        ports:
+          - 9000:9000
+        env:
+          MINIO_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          MINIO_SECRET_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    steps:
+      - name: Add 127.0.0.1 minio to /etc/hosts
+        run: echo "127.0.0.1 minio" | sudo tee -a /etc/hosts
