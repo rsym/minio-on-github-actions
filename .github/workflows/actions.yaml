@@ -19,9 +19,12 @@ jobs:
     steps:
       - name: Add 127.0.0.1 minio to /etc/hosts
         run: echo "127.0.0.1 minio" | sudo tee -a /etc/hosts
+      - uses: chrislennon/action-aws-cli@v1.1
       - name: make bucket
         run: aws --endpoint-url http://minio:9000/ s3 mb s3://sample-bucket
       - name: put object
         run: echo "sample-key" | aws --endpoint-url http://minio:9000/ s3 cp - s3://sample-bucket/sample/key
       - name: list objects
         run: aws --endpoint-url http://minio:9000/ s3 ls s3://sample-bucket/ --recursive
+      - uses: chrislennon/action-aws-cli@v1.1
+      - run: aws s3 ls
